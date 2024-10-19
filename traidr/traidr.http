@@ -1,0 +1,6 @@
+@traidr_HostAddress = http://localhost:5186
+
+GET {{traidr_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
