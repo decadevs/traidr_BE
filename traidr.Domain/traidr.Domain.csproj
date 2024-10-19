@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="IRepostory\" />
     <Folder Include="Dtos\" />
     <Folder Include="Context\" />
