@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IRepostory\" />
     <Folder Include="Dtos\" />
+    <Folder Include="IRepostory\" />
     <Folder Include="Context\" />
     <Folder Include="Repository\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

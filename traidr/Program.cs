@@ -1,4 +1,6 @@
 
+using traidr.Domain.ExceptionHandling.Configuraion;
+
 namespace traidr
 {
     public class Program
@@ -27,6 +29,8 @@ namespace traidr
 
             app.UseAuthorization();
 
+            //globalerrorhandler
+            app.AddGlobalErrorHandler();
 
             app.MapControllers();
 
