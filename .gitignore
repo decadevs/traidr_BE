@@ -245,6 +245,6 @@ paket-files/
 *.sln.iml
 
 
-appsettings.Development.json
+traidr\appsettings.json
 #jsjdnfoj
 #TicketEase/*.txt
