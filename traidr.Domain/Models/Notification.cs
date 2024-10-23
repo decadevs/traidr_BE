@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using traidr.Domain.Dtos.Enums;
+using traidr.Domain.Enums;
 
 namespace traidr.Domain.Models
 {
@@ -14,13 +14,13 @@ namespace traidr.Domain.Models
         [Key]
         public int NotificationId { get; set; }
 
-        [ForeignKey("Order")]
+       [ForeignKey("Order")]
         public int OrderId { get; set; }
 
         public Order Order { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public AppUser User { get; set; }
 

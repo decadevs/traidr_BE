@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace traidr.Domain.Models
 {
-    public class ShippingAddress
+    public class Address
     {
-        public int ShippingAddressId { get; set; }
+        public int AddressId { get; set; }
 
         public int UserId { get; set; }
 

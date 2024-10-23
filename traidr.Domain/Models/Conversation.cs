@@ -11,16 +11,17 @@ namespace traidr.Domain.Models
     {
         public int ConversationId { get; set; }
 
-        public int BuyerId { get; set; }
+        [ForeignKey("Buyer")]
+        public string BuyerId { get; set; }
+        public AppUser Buyer { get; set; }
 
-        public int SenderId { get; set; }
-
-        [ForeignKey("Product")]
-        public int ProductId { get; set; }
-
-        public Product Product { get; set; }
+        [ForeignKey("Seller")]
+        public string SellerId { get; set; }
+        public AppUser Seller { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime LastMessageAt { get; set; }
+
+        public ICollection<Message> Messages { get; set; }
     }
 }

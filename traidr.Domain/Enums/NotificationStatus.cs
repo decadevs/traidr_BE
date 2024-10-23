@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace traidr.Domain.Dtos.Enums
+namespace traidr.Domain.Enums
 {
     public enum NotificationStatus
     {
-        OrderConfirnmation,
-        ShippingUpdate,
-        DeliveryConfirmation,
-        NewOrderForSeller
+        Created,
+        Sent,
+        Delivered
+
 
     }
 }
