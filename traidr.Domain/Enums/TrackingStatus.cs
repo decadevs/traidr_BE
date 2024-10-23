@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace traidr.Domain.Models
+namespace traidr.Domain.Dtos.Enums
 {
-    internal class ShippingAddress
+    internal class TrackingStatus
     {
     }
 }

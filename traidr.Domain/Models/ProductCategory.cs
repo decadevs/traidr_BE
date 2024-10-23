@@ -15,11 +15,16 @@ namespace traidr.Domain.Models
 
         [ForeignKey("Product")]
         public int ProductId { get; set; }
-
         public Product Product {  get; set; }
 
 
+        [ForeignKey("ProductCategory")]
         public int ParentCategoryId { get; set; }
-        public string Description { get; set; }
+        public ProductCategory ParentCategory { get; set; }
+
+
+   
+
+        public ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }

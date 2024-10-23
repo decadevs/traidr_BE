@@ -16,9 +16,16 @@ namespace traidr.Domain.Models
 
         public string ProductDescription { get; set; }
 
+
+        [ForeignKey("ProductCategories")]
         public string ProductCategory { get; set; }
+        public ProductCategory ProductCategories { get; set; }
+
 
         public decimal Price { get; set; }
+
+
+     
 
         [ForeignKey("User")]
         public string UserId { get; set; }
@@ -26,6 +33,9 @@ namespace traidr.Domain.Models
         public AppUser User { get; set; }
 
         public DateTime CreationDate {  get; set; }
+
+        public ICollection<ProductElement> ProductElements { get; set; }
+        public ICollection<ProductImage> ProductImages { get; set; }
 
        
 

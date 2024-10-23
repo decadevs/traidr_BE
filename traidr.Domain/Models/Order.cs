@@ -13,28 +13,35 @@ namespace traidr.Domain.Models
         [Key]
         public int OrderId { get; set; }
 
-        [ForeignKey("Product")]
-        public int ProductId { get; set; }
-
-        public Product Product { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
-
+        public string UserId { get; set; }
         public AppUser User { get; set; }
+
+
 
         [ForeignKey("ProductCategory")]
         public int CategoryId {  get; set; }
-
         public  ProductCategory ProductCategory {  get; set; }
 
-        public int ShippingAddressId {  get; set; }
 
-        public string Tracking {  get; set; }
+
+        [ForeignKey("ShippingAddress")]
+        public int ShippingAddressId {  get; set; }
+        public ShippingAddress ShippingAddress { get; set; }
+
+
+        [ForeignKey("Tracking")]
+        public int? TrackingId {  get; set; }
+        public Tracking Tracking { get; set; }
+
+
         
         public DateTime OrderDate {  get; set; }
 
         public Decimal TotalAmount { get; set; }
+
+        public ICollection<Product> Products { get; set; }
 
 
 
