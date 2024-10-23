@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="EmailServices\" />
     <Folder Include="Cloudinary\" />
-    <Folder Include="Pagination\" />
   </ItemGroup>
 
 </Project>

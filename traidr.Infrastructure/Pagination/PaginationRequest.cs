@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace traidr.Infrastructure.Pagination
 {
-    internal class PaginationRequest
+    public class PaginationRequest
     {
+        private int _pageSize = 10;
+        private const int MaxPageSize = 100;
+
+        public int PageNumver { get; set; } = 1;
+
+        public int PagesSize
+        {
+            get => _pageSize;
+            set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
+        }
     }
 }
