@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using traidr.Domain.Context;
 
+using traidr.Domain.ExceptionHandling.Configuraion;
+
+
 namespace traidr
 {
     public class Program
@@ -36,6 +39,8 @@ namespace traidr
 
             app.UseAuthorization();
 
+            //globalerrorhandler
+            app.AddGlobalErrorHandler();
 
             app.MapControllers();
 
