@@ -1,7 +1,10 @@
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.OpenApi.Models;
 using traidr.Domain.Context;
+using traidr.Domain.Models;
 
 namespace traidr
 {
@@ -16,12 +19,52 @@ namespace traidr
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
+            // Swagger Authorization Configuration
+            builder.Services.AddSwaggerGen(option =>
+            {
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Traidr API", Version = "v1" });
+                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid token", 
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {                      
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer",
+                            }
+                        },
+                        new string[] { }                   
+                    }
+                });
+            });
+
+            // Postgres Server Configuration
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            // Identity Framework Configuration
+            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredLength = 8;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             var app = builder.Build();
 

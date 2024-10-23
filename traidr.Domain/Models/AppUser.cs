@@ -14,6 +14,6 @@ namespace traidr.Domain.Models
         public int? Age { get; set; }
         public string? ProfilePhoto { get; set; }
         public string? ShopName { get; set; }
-        public bool IsSeller { get; set; } = false;
+        public bool IsSeller { get; set; } = false;        
     }
 }
