@@ -7,9 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EmailServices\" />
-    <Folder Include="Cloudinary\" />
     <Folder Include="Pagination\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\traidr.Application\traidr.Application.csproj" />
   </ItemGroup>
 
 </Project>
