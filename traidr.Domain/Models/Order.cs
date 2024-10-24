@@ -26,9 +26,9 @@ namespace traidr.Domain.Models
 
 
 
-        [ForeignKey("ShippingAddress")]
-        public int ShippingAddressId {  get; set; }
-        public ShippingAddress ShippingAddress { get; set; }
+        [ForeignKey("ShippingDetail")]
+        public int AddressId {  get; set; }
+        public Address ShippingDetail { get; set; }
 
 
         [ForeignKey("Tracking")]

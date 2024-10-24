@@ -18,7 +18,8 @@ namespace traidr.Domain.Models
 
         public Product Product { get; set; }
 
-        public int UserId { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
 
         public AppUser User { get; set; }
 

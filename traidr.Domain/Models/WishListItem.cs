@@ -23,7 +23,8 @@ namespace traidr.Domain.Models
 
         public int Quantity { get; set; }
 
-        public Decimal Price { get; set; }
+
+        public decimal Price { get; set; }
 
         public DateTime Date { get; set; }
     }

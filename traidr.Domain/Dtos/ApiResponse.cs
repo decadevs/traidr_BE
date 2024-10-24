@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace traidr.Domain.Enums
+namespace traidr.Domain.Dtos
 {
-    public enum NotificationStatus
+    internal class ResponseObject
     {
-        Created,
-        Sent,
-        Delivered
-
-
     }
 }

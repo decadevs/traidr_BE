@@ -37,6 +37,8 @@ namespace traidr.Domain.Models
         public ICollection<ProductElement> ProductElements { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }
 
+        public ICollection<Review> Reviews { get; set; }
+
        
 
     }

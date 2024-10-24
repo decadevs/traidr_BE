@@ -17,7 +17,7 @@ namespace traidr.Domain.Models
         public Product Product { get; set; }
 
 
-        public int QuantiyInStock { get; set; }
+        public int QuantityInStock { get; set; }
 
         public int Sku { get; set; }
     }

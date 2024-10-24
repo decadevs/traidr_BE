@@ -17,14 +17,14 @@ namespace traidr.Domain.Models
         public Conversation? Conversation { get; set; }
 
         [ForeignKey("Sender")]
-        public int SenderId { get; set; }
+        public string SenderId { get; set; }
         public AppUser Sender { get; set; }
 
         [ForeignKey("Recipient")]
-        public int RecipientId { get; set; }
+        public string RecipientId { get; set; }
         public AppUser Recipient { get; set; }
 
-        public string? Content { get; set; }
+        public string Content { get; set; }
 
         public DateTime SentAt { get; set; }
 
