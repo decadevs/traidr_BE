@@ -14,7 +14,7 @@ namespace traidr.Domain.Models
         [Key]
         public int NotificationId { get; set; }
 
-       [ForeignKey("Order")]
+        [ForeignKey("Order")]
         public int OrderId { get; set; }
 
         public Order Order { get; set; }

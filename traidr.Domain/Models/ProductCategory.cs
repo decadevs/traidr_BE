@@ -13,6 +13,9 @@ namespace traidr.Domain.Models
         [Key]
         public int CategoryId { get; set; }
 
+        [ForeignKey("Product")]
+        public int ProductId { get; set; }
+        public Product Product {  get; set; }
 
 
         [ForeignKey("ProductCategory")]

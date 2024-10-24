@@ -39,7 +39,7 @@ namespace traidr.Domain.Models
 
         public ICollection<Review> Reviews { get; set; }
 
-
+       
 
     }
 }
