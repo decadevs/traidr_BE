@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "traidr", "traidr\traidr.csproj", "{D8B7083C-86FF-4C7D-B34D-BF760410A4FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "traidr", "traidr\traidr.csproj", "{D8B7083C-86FF-4C7D-B34D-BF760410A4FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "traidr.Domain", "traidr.Domain\traidr.Domain.csproj", "{2D143E30-CE98-440C-9006-71D8BA1F81CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "traidr.Domain", "traidr.Domain\traidr.Domain.csproj", "{2D143E30-CE98-440C-9006-71D8BA1F81CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "traidr.Application", "traidr.Application\traidr.Application.csproj", "{B44C0D5C-5D35-4BCA-9986-FB39E2594220}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "traidr.Application", "traidr.Application\traidr.Application.csproj", "{B44C0D5C-5D35-4BCA-9986-FB39E2594220}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "traidr.Infrastructure", "traidr.Infrastructure\traidr.Infrastructure.csproj", "{E112D631-519F-47E0-B34C-7FF78308B80A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "traidr.Infrastructure", "traidr.Infrastructure\traidr.Infrastructure.csproj", "{E112D631-519F-47E0-B34C-7FF78308B80A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Item", "Solution Item", "{361318F0-3CE9-42A6-9EA7-F3C053EA43BC}"
 	ProjectSection(SolutionItems) = preProject

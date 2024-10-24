@@ -1,4 +1,5 @@
 
+using traidr.Domain.ExceptionHandling.Configuraion;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -93,6 +94,7 @@ namespace traidr
                 };
             });
 
+          
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -106,6 +108,8 @@ namespace traidr
 
             app.UseAuthorization();
 
+            //globalerrorhandler
+            app.AddGlobalErrorHandler();
 
             app.MapControllers();
 
