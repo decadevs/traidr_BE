@@ -6,8 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection;
+using traidr.Application.IServices;
+using traidr.Application.Services;
 using traidr.Domain.Context;
 using traidr.Domain.Models;
+using traidr.Infrastructure.Cloudinary;
+using traidr.Infrastructure.EmailServices;
 
 namespace traidr
 {
@@ -54,6 +59,17 @@ namespace traidr
             });
 
             // Postgres Server Configuration
+            // Add the email sender service to the dependency injection container
+            builder.Services.AddScoped<IEmailSendingService, EmailSendingService>();
+
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
+
+            // Configure SMTP settings from appsettings.json
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+
+
+            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -115,5 +131,7 @@ namespace traidr
 
             app.Run();
         }
+
     }
+
 }

@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EmailServices\" />
-    <Folder Include="Cloudinary\" />
-	<Folder Include="Pagination\" />
+    <Folder Include="Pagination\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +17,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\traidr.Application\traidr.Application.csproj" />
   </ItemGroup>
 
 </Project>
