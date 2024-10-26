@@ -17,6 +17,7 @@ namespace traidr.Domain.Models
         public Product Product { get; set; }
 
         public string ImageUrl { get; set; }
+        public string publicId { get; set; }
 
     }
 }

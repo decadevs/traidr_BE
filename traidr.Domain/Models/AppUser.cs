@@ -25,16 +25,5 @@ namespace traidr.Domain.Models
 
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
-
-        [ForeignKey("ShoppingCart")]
-        public int ShoppingCartId { get; set; }
-        public ShoppingCart ShoppingCart { get; set; }
-
-      
-        [ForeignKey("WishList")]
-        public int WishListId { get; set; }
-        public ShoppingCart WishList { get; set; }
-
-
     }
 }

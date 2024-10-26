@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace traidr.Domain.Context
+namespace traidr.Domain.Context.PreSeeding
 {
     public class UserRoles
     {

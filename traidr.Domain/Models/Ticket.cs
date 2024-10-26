@@ -13,9 +13,10 @@ namespace traidr.Domain.Models
         public int id { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public AppUser User { get; set; }
 
+        public TicketCategory TicketCategory { get; set; }  
         public string Title { get; set; }
         public string Description { get; set; }
         public TicketStatus TicketStatus { get; set; }

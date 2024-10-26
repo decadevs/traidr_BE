@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using traidr.Domain.Context;
 using traidr.Domain.Models;
+using traidr.Domain.Context.PreSeeding;
 
 namespace traidr
 {
@@ -70,7 +71,7 @@ namespace traidr
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Jwt Configuration
-            builder.Services.AddAuthentication(options =>
+           /* builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme =
                  options.DefaultChallengeScheme =
@@ -92,10 +93,30 @@ namespace traidr
                         System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
                         )
                 };
-            });
+            });*/
 
           
             var app = builder.Build();
+
+            try
+            {
+                if (app.Environment.IsDevelopment())
+                {
+                    using var scope = app.Services.CreateScope();
+                    var serviceProvider = scope.ServiceProvider;
+                    var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+                    var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+                    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                    Seeding.SeedData(context, userManager, roleManager).Wait();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            app.UseAuthentication();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

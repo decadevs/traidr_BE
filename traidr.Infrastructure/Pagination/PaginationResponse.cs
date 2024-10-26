@@ -6,20 +6,21 @@ using System.Threading.Tasks;
 
 namespace traidr.Infrastructure.Pagination
 {
-    public class PaginationResponse
+    public class PaginationResponse<T>
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public int TotalItems { get; set; }
         public int TotalPages { get; set; }
-    
+        public List<T> Data { get; set; }
        
-        public PaginationResponse(int totalItems, int pageNumber, int pageSize)
+        public PaginationResponse(int totalItems, int pageNumber, int pageSize, int totalPages, List<T> data)
         {           
             TotalItems = totalItems;
             PageNumber = pageNumber;
             PageSize = pageSize;
             TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            Data = data;
         }
     }
 

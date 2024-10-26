@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace traidr.Domain.Enums
 {
-    public enum NotificationStatus
+    public enum TicketCategory
     {
-        Created,
-        Sent,
-        Delivered
+        OrderIssues,
+        ProductQuestions,
+        TechnicalSupport,
+        AccountIssues,
+        Other
     }
 }

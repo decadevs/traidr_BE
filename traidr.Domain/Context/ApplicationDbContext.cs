@@ -18,16 +18,41 @@ namespace traidr.Domain.Context
         }
 
 
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<ProductElement> ProductElements { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Message> Messages { get; set; }       
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Tracking> Trackings { get; set; }        
+        public DbSet<Notification> Notifications { get; set; }
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<IdentityRole>().HasData(new List<IdentityRole>
-            {
-                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
-                new IdentityRole { Name = "User", NormalizedName = "USER" }
-            });
+            // One-to-many relationship for conversations where the user is a seller
+            modelBuilder.Entity<Conversation>()
+                .HasOne(c => c.Seller)
+                .WithMany(u => u.Conversations)  // Only one list of conversations in User
+                .HasForeignKey(c => c.SellerId)
+                .OnDelete(DeleteBehavior.SetNull);  // Prevent cascade delete
+
+            // One-to-many relationship for conversations where the user is a buyer
+            modelBuilder.Entity<Conversation>()
+                .HasOne(c => c.Buyer)
+                .WithMany()  // Same single list of conversations
+                .HasForeignKey(c => c.BuyerId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            base.OnModelCreating(modelBuilder);
         }
+
     }
 
 
