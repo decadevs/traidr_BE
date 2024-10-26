@@ -13,19 +13,14 @@ namespace traidr.Domain.Models
         [Key]
         public int CategoryId { get; set; }
 
-        [ForeignKey("Product")]
-        public int ProductId { get; set; }
-        public Product Product {  get; set; }
-
+        public string CategoryName { get; set; }
 
         [ForeignKey("ProductCategory")]
         public int? ParentCategoryId { get; set; }
-        public ProductCategory ParentCategory { get; set; }
-
-
-   
+        public ProductCategory ParentCategory { get; set; }   
 
         public ICollection<ProductCategory> SubCategories { get; set; }
-        public ICollection<Product> Products { get; set; }
+
+        //public ICollection<Product> Products { get; set; }
     }
 }

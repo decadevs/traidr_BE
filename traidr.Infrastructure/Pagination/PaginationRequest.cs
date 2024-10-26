@@ -9,9 +9,10 @@ namespace traidr.Infrastructure.Pagination
     public class PaginationRequest
     {
         private int _pageSize = 10;
-        private const int MaxPageSize = 100;
 
-        public int PageNumver { get; set; } = 1;
+        public const int MaxPageSize = 100;
+
+        public int PageNumber { get; set; } = 1;
 
         public int PagesSize
         {

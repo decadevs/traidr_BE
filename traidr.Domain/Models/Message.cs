@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace traidr.Domain.Models
 {
     public class Message
     {
+        [Key]
         public int MessageId { get; set; }
 
         [ForeignKey("Conversation")]
@@ -16,19 +18,17 @@ namespace traidr.Domain.Models
 
         public Conversation? Conversation { get; set; }
 
+
         [ForeignKey("Sender")]
         public string SenderId { get; set; }
-        public AppUser Sender { get; set; }
+        public AppUser Sender { get; set; }       
 
-        [ForeignKey("Recipient")]
-        public string RecipientId { get; set; }
-        public AppUser Recipient { get; set; }
 
         public string Content { get; set; }
 
         public DateTime SentAt { get; set; }
 
-        public bool IsRead { get; set; }
+         
 
 
     }

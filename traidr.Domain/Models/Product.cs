@@ -18,7 +18,7 @@ namespace traidr.Domain.Models
 
 
         [ForeignKey("ProductCategories")]
-        public string ProductCategory { get; set; }
+        public int ProductCategory { get; set; }
         public ProductCategory ProductCategories { get; set; }
 
 
@@ -27,19 +27,17 @@ namespace traidr.Domain.Models
 
      
 
-        [ForeignKey("User")]
-        public string UserId { get; set; }
+        [ForeignKey("Seller")]
+        public string SellerId { get; set; }
 
-        public AppUser User { get; set; }
+        public AppUser Seller { get; set; }
 
         public DateTime CreationDate {  get; set; }
 
         public ICollection<ProductElement> ProductElements { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }
 
-        public ICollection<Review> Reviews { get; set; }
-
-       
+        public ICollection<Review> Reviews { get; set; }       
 
     }
 }

@@ -13,7 +13,7 @@ namespace traidr.Domain.Models
         public int TrackingId { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public AppUser User { get; set; }
 
         [ForeignKey("Order")]
@@ -24,6 +24,6 @@ namespace traidr.Domain.Models
 
         public DateTime UpdatedAt { get; set; }
 
-        public string TrackingNumber { get; set; }
+        public Guid TrackingNumber { get; set; } = Guid.NewGuid();
     }
 }

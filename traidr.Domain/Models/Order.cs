@@ -31,15 +31,15 @@ namespace traidr.Domain.Models
         public Address ShippingDetail { get; set; }
 
 
-        [ForeignKey("Tracking")]
-        public int? TrackingId {  get; set; }
+       /* [ForeignKey("Tracking")]
+        public int TrackingId {  get; set; }*/
         public Tracking Tracking { get; set; }
 
 
         
         public DateTime OrderDate {  get; set; }
 
-        public Decimal TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
 
         public ICollection<Product> Products { get; set; }
 
