@@ -13,7 +13,7 @@ namespace traidr.Infrastructure.Pagination
         public int TotalItems { get; set; }
         public int TotalPages { get; set; }
         public List<T> Data { get; set; }
-       
+    
         public PaginationResponse(int totalItems, int pageNumber, int pageSize, int totalPages, List<T> data)
         {           
             TotalItems = totalItems;

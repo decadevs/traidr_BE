@@ -52,7 +52,6 @@ namespace traidr.Domain.Context
 
             base.OnModelCreating(modelBuilder);
         }
-
     }
 
 

@@ -14,7 +14,7 @@ namespace traidr.Infrastructure.Pagination
 
         public int PageNumber { get; set; } = 1;
 
-        public int PagesSize   
+        public int PagesSize
         {
             get => _pageSize;
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;

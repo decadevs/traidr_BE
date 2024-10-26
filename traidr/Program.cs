@@ -6,8 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection;
+using traidr.Application.IServices;
+using traidr.Application.Services;
 using traidr.Domain.Context;
 using traidr.Domain.Models;
+using traidr.Infrastructure.Cloudinary;
+using traidr.Infrastructure.EmailServices;
 using traidr.Domain.Context.PreSeeding;
 
 namespace traidr
@@ -55,6 +60,18 @@ namespace traidr
             });
 
             // Postgres Server Configuration
+            // Add the email sender service to the dependency injection container
+            builder.Services.AddScoped<IEmailSendingService, EmailSendingService>();
+
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
+
+            // Configure SMTP settings from appsettings.json
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+
+
+            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
+            // Postgres Server Configuration
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -71,7 +88,7 @@ namespace traidr
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Jwt Configuration
-           /* builder.Services.AddAuthentication(options =>
+            builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme =
                  options.DefaultChallengeScheme =
@@ -93,7 +110,42 @@ namespace traidr
                         System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
                         )
                 };
-            });*/
+            });
+
+            // Identity Framework Configuration
+            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredLength = 8;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // Jwt Configuration
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme =
+                 options.DefaultChallengeScheme =
+                  options.DefaultForbidScheme =
+                   options.DefaultScheme =
+                    options.DefaultSignInScheme =
+                     options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
+                        )
+                };
+            });
 
           
             var app = builder.Build();
@@ -136,5 +188,7 @@ namespace traidr
 
             app.Run();
         }
+
     }
+
 }
