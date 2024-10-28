@@ -50,7 +50,7 @@ namespace traidr.Controllers
             {
                 UserName = signupDto.UserName,
                 FirstName = signupDto.UserName,
-                Email = signupDto.Email,      
+                Email = signupDto.Email,                
                 ReferralSource = signupDto.ReferralSource,
             };
 
