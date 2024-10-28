@@ -262,9 +262,6 @@ namespace traidr.Domain.Context.PreSeeding
             }           
 
 
-            var product1 = context.Products.FirstOrDefault(p => p.ProductName == "Smartphone");
-            var product2 = context.Products.FirstOrDefault(p => p.ProductName == "Blender");
-
             // Orders
             if (!context.Orders.Any())
             {
