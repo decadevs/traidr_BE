@@ -17,8 +17,7 @@ namespace traidr.Domain.Context.PreSeeding
         public static async Task SeedData(ApplicationDbContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             context.Database.EnsureCreated();
-            await SeedAppUserAndRoles(roleManager, userManager);
-            //await ProductSeedData.SeedProductData(context);
+            await SeedAppUserAndRoles(roleManager, userManager);           
             await SeedAllDataAsync(context);
         }
 
@@ -45,7 +44,7 @@ namespace traidr.Domain.Context.PreSeeding
                     Email = "sircent100@gmai.com",
                     NormalizedEmail = "SIRCENT100@GMAI.COM",
                     Gender = Gender.Male,
-                    Age = 30,
+                    Age = 30,                    
                 };
 
                 await userManager.CreateAsync(adminUser, "AdminPassword123!");
@@ -68,11 +67,11 @@ namespace traidr.Domain.Context.PreSeeding
                 await userManager.CreateAsync(normalUser, "UserPassword123!");
                 await userManager.AddToRoleAsync(normalUser, UserRoles.User);
             }
-
+            
             if (userManager.Users.All(u => u.UserName.Substring(1) != "precious"))
             {
                 var normalUser = new AppUser
-                {
+                {                    
                     UserName = "@" + "precious",
                     NormalizedUserName = "@" + "PRECIOUS",
                     Email = "precious@gmail.com",
@@ -161,7 +160,7 @@ namespace traidr.Domain.Context.PreSeeding
             if (!context.Products.Any())
             {
                 var products = new List<Product>
-                {                    
+                {
                     new Product
                     {
                         ProductName = "Smartphone",
@@ -177,7 +176,7 @@ namespace traidr.Domain.Context.PreSeeding
                                 ProductId = 1,
                                 QuantityInStock = 50,
                                 Sku = 1001
-                            },
+                        },
                             new ProductElement
                             {
                                 ProductId = 1,
@@ -192,7 +191,7 @@ namespace traidr.Domain.Context.PreSeeding
                                 ProductId = 1,
                                 ImageUrl = "smartphone1.jpg",
                                 publicId = "img1"
-                            },
+                        },
                             new ProductImage
                             {
                                 ProductId = 1,
@@ -220,38 +219,38 @@ namespace traidr.Domain.Context.PreSeeding
                     },
                     new Product
                     {
-                        ProductName = "Blender",
+                        ProductName = "Blender", 
                         ProductDescription = "High-power blender for smoothies",
                         ProductCategoryId = 2,
                         SellerId = user2Id,
-                        Price = 89.99M,
+                        Price = 89.99M, 
                         CreationDate = DateTime.UtcNow.AddMonths(-1),
                         ProductElements = new List<ProductElement>
                         {
-                            new ProductElement
-                            {
+                            new ProductElement 
+                            { 
                                 ProductId = 2,
-                                QuantityInStock = 100,
-                                Sku = 2001
+                                QuantityInStock = 100, 
+                                Sku = 2001 
                             }
                         },
                         ProductImages = new List<ProductImage>
                         {
-                            new ProductImage
-                            {
+                            new ProductImage 
+                            { 
                                 ProductId = 2,
-                                ImageUrl = "blender.jpg",
-                                publicId = "img3"
+                                ImageUrl = "blender.jpg", 
+                                publicId = "img3" 
                             }
                         },
                         Reviews = new List<Review>
                         {
-                            new Review
-                            {
+                            new Review 
+                            { 
                                 ProductId = 2,
                                 UserId = user1Id,
                                 Comment = "Very useful",
-                                Rating = 4,
+                                Rating = 4, 
                                 Date = DateTime.UtcNow.AddDays(-3)
                             }
                         }
@@ -260,9 +259,11 @@ namespace traidr.Domain.Context.PreSeeding
                 context.Products.AddRange(products);
                 await context.SaveChangesAsync();
 
-            }
+            }           
 
 
+            var product1 = context.Products.FirstOrDefault(p => p.ProductName == "Smartphone");
+            var product2 = context.Products.FirstOrDefault(p => p.ProductName == "Blender");
 
             // Orders
             if (!context.Orders.Any())
@@ -280,31 +281,31 @@ namespace traidr.Domain.Context.PreSeeding
                     new Order
                     {
                         UserId = user1Id,
-                        CategoryId = category1.CategoryId,
-                        AddressId = address1.AddressId,
+                        CategoryId = category1.CategoryId, 
+                        AddressId = address1.AddressId, 
                         OrderDate = DateTime.UtcNow.AddDays(-15),
-                        TotalAmount = 749.99M,
+                        TotalAmount = 749.99M, 
                         Products = new List<Product> { product1  },
                         Tracking = new Tracking
                         {
                             OrderId = 1,
-                            UserId = user1Id,
+                            UserId = user1Id, 
                             TrackingStatus = TrackingStatus.Pending,
                             UpdatedAt = DateTime.UtcNow.AddDays(-3)
                         }
                     },
                     new Order
                     {
-                        UserId = user2Id,
-                        CategoryId = category2.CategoryId,
+                        UserId = user2Id, 
+                        CategoryId = category2.CategoryId, 
                         AddressId = address2.AddressId,
                         OrderDate = DateTime.UtcNow.AddDays(-5),
-                        TotalAmount = 89.99M,
+                        TotalAmount = 89.99M, 
                         Products = new List<Product> { product2 },
                         Tracking = new Tracking
                         {
                             OrderId = 2,
-                            UserId = user2Id,
+                            UserId = user2Id, 
                             TrackingStatus = TrackingStatus.Delivered,
                             UpdatedAt = DateTime.UtcNow
                         }
@@ -383,11 +384,11 @@ namespace traidr.Domain.Context.PreSeeding
                 {
                     new Notification
                     {
-                        OrderId = 1,
+                        OrderId = 1, 
                         UserId = user1Id,
                         Message = "Your order has been shipped.",
-                        Status = NotificationStatus.Sent,
-                        NotificationType = NotificationType.ShippingUpdate,
+                        Status = NotificationStatus.Sent, 
+                        NotificationType = NotificationType.ShippingUpdate, 
                         CreatedAt = DateTime.UtcNow.AddDays(-2), IsSeller = false
                     },
                     new Notification
@@ -395,8 +396,8 @@ namespace traidr.Domain.Context.PreSeeding
                         OrderId = 2,
                         UserId = user2Id,
                         Message = "Your order has been delivered.",
-                        Status = NotificationStatus.Delivered,
-                        NotificationType = NotificationType.DeliveryConfirmation,
+                        Status = NotificationStatus.Delivered, 
+                        NotificationType = NotificationType.DeliveryConfirmation, 
                         CreatedAt = DateTime.UtcNow.AddDays(-1), IsSeller = false
                     }
                 };
@@ -413,28 +414,29 @@ namespace traidr.Domain.Context.PreSeeding
                     new Ticket
                     {
                         UserId = user1Id,
-                        TicketCategory = TicketCategory.OrderIssues,
+                        TicketCategory = TicketCategory.OrderIssues, 
                         Title = "Issue with product",
-                        Description = "The product I received is defective.",
-                        TicketStatus = TicketStatus.Open,
+                        Description = "The product I received is defective.", 
+                        TicketStatus = TicketStatus.Open, 
                         CreatedAt = DateTime.UtcNow.AddDays(-7)
                     },
                     new Ticket
                     {
                         UserId = user3Id,
-                        TicketCategory = TicketCategory.TechnicalSupport,
+                        TicketCategory = TicketCategory.TechnicalSupport, 
                         Title = "Product listing issue",
-                        Description = "My product listing is not showing up correctly.",
+                        Description = "My product listing is not showing up correctly.", 
                         TicketStatus = TicketStatus.Closed,
                         CreatedAt = DateTime.UtcNow.AddDays(-20),
                         ClosedAt = DateTime.UtcNow.AddDays(-10)
                     }
                 };
-                      context.Tickets.AddRange(tickets);
+                context.Tickets.AddRange(tickets);
                 await context.SaveChangesAsync();
             }
 
             // Save all changes to the database
+            await context.SaveChangesAsync();
         }
     }
 

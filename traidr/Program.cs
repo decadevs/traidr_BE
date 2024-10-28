@@ -132,10 +132,10 @@ namespace traidr
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOrigin", policy => 
-                                            policy.AllowAnyOrigin()
-                                                    .AllowAnyMethod()
-                                                    .AllowAnyHeader());
+                options.AddPolicy("AllowAllOrigin", 
+                    policy => policy.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader());
                     
             });
 
@@ -161,6 +161,7 @@ namespace traidr
                 Console.WriteLine($"Error: {ex.InnerException?.Message ?? ex.Message}");
                 throw;
             }
+            app.UseCors("AllowAllOrigin");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -170,8 +171,6 @@ namespace traidr
             }
 
             app.UseHttpsRedirection();
-
-            app.UseCors("AllowAllOrigin");
 
             app.UseAuthentication();
 
