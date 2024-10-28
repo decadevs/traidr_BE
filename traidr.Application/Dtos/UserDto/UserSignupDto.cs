@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using traidr.Domain.Enums;
 
 namespace traidr.Application.Dtos.UserDto
 {
@@ -17,6 +18,6 @@ namespace traidr.Application.Dtos.UserDto
 
         [Required]
         public string Password { get; set; }
-        public string ReferralSource { get; set; }
+        public ReferralSource ReferralSource { get; set; }
     }
 }

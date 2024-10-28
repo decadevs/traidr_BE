@@ -11,7 +11,7 @@ using traidr.Domain.Models;
 
 namespace traidr.Controllers
 {
-    [Route("api/auth[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -50,7 +50,8 @@ namespace traidr.Controllers
             {
                 UserName = signupDto.UserName,
                 FirstName = signupDto.UserName,
-                Email = signupDto.Email,                
+                Email = signupDto.Email,      
+                ReferralSource = signupDto.ReferralSource,
             };
 
 
