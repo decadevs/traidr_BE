@@ -11,19 +11,22 @@ using traidr.Domain.Enums;
 namespace traidr.Domain.Models
 {
     public class AppUser : IdentityUser
-    {
+    { 
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public Gender? Gender { get; set; }
         public int? Age { get; set; }
         public string? ProfilePhoto { get; set; }
-        public string? ShopName { get; set; }
+        public Shop Shop { get; set; }
         public bool IsSeller { get; set; } = false;
+        public ReferralSource? ReferralSource { get; set; }
 
         public ICollection<Conversation> Conversations { get; set; }
         public ICollection<Order> Orders { get; set; }
 
         public ICollection<Address> Addresses { get; set; }
 
-        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+        public ICollection<Ticket> Tickets { get; set; }
 
     }
 }

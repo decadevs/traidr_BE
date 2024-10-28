@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using traidr.Domain.Context;
@@ -11,9 +12,11 @@ using traidr.Domain.Context;
 namespace traidr.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241026220641_CreateShopTableAndModifyUserAndProductCategoryTable")]
+    partial class CreateShopTableAndModifyUserAndProductCategoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -959,242 +962,6 @@ namespace traidr.Domain.Migrations
                 {
                     b.Navigation("Products");
 
-                    b.Navigation("SubCategories");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Address", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.AppUser", "User")
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Conversation", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.AppUser", "Buyer")
-                        .WithMany()
-                        .HasForeignKey("BuyerId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.HasOne("traidr.Domain.Models.AppUser", "Seller")
-                        .WithMany("Conversations")
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.Navigation("Buyer");
-
-                    b.Navigation("Seller");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Message", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.Conversation", "Conversation")
-                        .WithMany("Messages")
-                        .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("traidr.Domain.Models.AppUser", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Conversation");
-
-                    b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Notification", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("traidr.Domain.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Order", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.Address", "ShippingDetail")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("traidr.Domain.Models.ProductCategory", "ProductCategory")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("traidr.Domain.Models.AppUser", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductCategory");
-
-                    b.Navigation("ShippingDetail");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Product", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("traidr.Domain.Models.ProductCategory", "ProductCategories")
-                        .WithMany()
-                        .HasForeignKey("ProductCategory")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("traidr.Domain.Models.AppUser", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductCategories");
-
-                    b.Navigation("Seller");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.ProductCategory", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.ProductCategory", "ParentCategory")
-                        .WithMany("SubCategories")
-                        .HasForeignKey("ParentCategoryId");
-
-                    b.Navigation("ParentCategory");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.ProductElement", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.Product", "Product")
-                        .WithMany("ProductElements")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.ProductImage", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.Product", "Product")
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Review", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.Product", "Product")
-                        .WithMany("Reviews")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("traidr.Domain.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Ticket", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.AppUser", "User")
-                        .WithMany("Tickets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Tracking", b =>
-                {
-                    b.HasOne("traidr.Domain.Models.Order", "Order")
-                        .WithOne("Tracking")
-                        .HasForeignKey("traidr.Domain.Models.Tracking", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("traidr.Domain.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.AppUser", b =>
-                {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Conversations");
-
-                    b.Navigation("Orders");
-
-                    b.Navigation("Tickets");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Conversation", b =>
-                {
-                    b.Navigation("Messages");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Order", b =>
-                {
-                    b.Navigation("Products");
-
-                    b.Navigation("Tracking")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.Product", b =>
-                {
-                    b.Navigation("ProductElements");
-
-                    b.Navigation("ProductImages");
-
-                    b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("traidr.Domain.Models.ProductCategory", b =>
-                {
                     b.Navigation("SubCategories");
                 });
 #pragma warning restore 612, 618

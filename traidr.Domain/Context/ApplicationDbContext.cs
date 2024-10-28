@@ -50,6 +50,11 @@ namespace traidr.Domain.Context
                 .HasForeignKey(c => c.BuyerId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.ProductCategory)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.ProductCategoryId);
+
             base.OnModelCreating(modelBuilder);
         }
     }

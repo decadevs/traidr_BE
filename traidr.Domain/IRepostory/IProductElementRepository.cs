@@ -1,0 +1,10 @@
+﻿using traidr.Domain.Models;
+
+namespace traidr.Domain.IRepostory
+{
+    public interface IProductElementRepository
+    {
+        Task AddProductElement(ProductElement productElement);
+        Task AddProductElementsAsync(IEnumerable<ProductElement> productElements);
+    }
+}
