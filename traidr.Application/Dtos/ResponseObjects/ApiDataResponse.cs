@@ -19,14 +19,14 @@ namespace traidr.Application.Dtos.ResponseObjects
             Message = message;
         }
 
-        public static ApiResponse<T> Success(T data, string message = "Success")
+        public static ApiDataResponse<T> Success(T data, string message = "Success")
         {
-            return new ApiResponse<T> { Succeeded = true, Data = data, Message = message };
+            return new ApiDataResponse<T> { Succeeded = true, Data = data, Message = message };
         }
 
-        public static ApiResponse<T> Failed(T data, string message = "Failure", List<string> errors = null)
+        public static ApiDataResponse<T> Failed(T data, string message = "Failure", List<string> errors = null)
         {
-            return new ApiResponse<T> { Succeeded = false, Data = data, Message = message, Errors = errors };
+            return new ApiDataResponse<T> { Succeeded = false, Data = data, Message = message, Errors = errors };
         }
     }
 }

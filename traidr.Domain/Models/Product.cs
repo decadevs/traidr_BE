@@ -17,15 +17,12 @@ namespace traidr.Domain.Models
         public string ProductDescription { get; set; }
 
 
-        [ForeignKey("ProductCategories")]
-        public int ProductCategory { get; set; }
-        public ProductCategory ProductCategories { get; set; }
+        [ForeignKey("ProductCategory")]
+        public int ProductCategoryId { get; set; }
+        public ProductCategory ProductCategory { get; set; }
 
+        public decimal Price { get; set; }     
 
-        public decimal Price { get; set; }
-
-
-     
 
         [ForeignKey("Seller")]
         public string SellerId { get; set; }

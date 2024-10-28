@@ -30,8 +30,4 @@ namespace traidr.Application.Dtos.ResponseObjects
         }
     }
 
-    public class ApiResponse<T> : ApiResponse
-    {
-
-    }
 }

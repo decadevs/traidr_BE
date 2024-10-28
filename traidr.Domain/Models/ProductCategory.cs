@@ -21,6 +21,6 @@ namespace traidr.Domain.Models
 
         public ICollection<ProductCategory> SubCategories { get; set; }
 
-        //public ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }
