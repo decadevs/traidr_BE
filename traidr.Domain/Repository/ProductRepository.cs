@@ -30,5 +30,21 @@ namespace traidr.Domain.Repository
             await _context.ProductImages.AddRangeAsync(productImage);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Product>> FindProductByCategoryIdAsync(int id)
+        {
+            return await _context.Products.Where(s => s.ProductCategoryId == id).ToListAsync();
+        }
+
+        public async Task<Product> FindProductByIdAsync(int productId)
+        {
+
+            return await _context.Products.FindAsync(productId);
+        }
+
+        public async Task<List<Product>> GetAllProductAsync()
+        {
+            return await _context.Products.ToListAsync();
+        }
     }
 }
