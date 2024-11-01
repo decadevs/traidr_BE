@@ -24,3 +24,4 @@ namespace traidr.Domain.Models
         public ICollection<Product> Products { get; set; }
     }
 }
+

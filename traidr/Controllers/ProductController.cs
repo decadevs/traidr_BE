@@ -137,10 +137,36 @@ namespace traidr.Controllers
             return Ok(ApiDataResponse<List<Product>>.Success(products, "All products retrieved successfully"));
         }
 
+        [HttpGet("Productcategory/{id}")]
+        public ActionResult<ProductCategory> GetCategoryById(int id)
+        {
+            var category = _productRepository.GetCategoryById(id);
+            if (category == null)
+            {
+                return NotFound(new { message = $"Category with ID {id} not found." });
+            }
 
+            return Ok(category);
+        }
 
+        // Endpoint to get product elements by Product ID
+        [HttpGet("product/{id}/elements")]
+        public ActionResult<List<ProductElement>> GetProductElementsByProductId(int id)
+        {
+            var elements = _productElementRepository.GetProductElementsByProductId(id);
+            if (elements == null || elements.Count == 0)
+            {
+                return NotFound(new { message = $"Product elements for product ID {id} not found." });
+            }
 
-
+            return Ok(elements);
+        }
     }
+
+
+
+
+
+}
 
 }
