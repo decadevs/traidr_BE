@@ -4,6 +4,7 @@ using System.Security.Claims;
 using traidr.Application.Dtos.ProductDto;
 using traidr.Application.Dtos.ResponseObjects;
 using traidr.Application.IServices;
+using traidr.Domain.ExceptionHandling.Exceptions;
 using traidr.Domain.IRepostory;
 using traidr.Domain.Models;
 
@@ -95,6 +96,50 @@ namespace traidr.Controllers
 
             return Ok(ApiResponse.Success(elements));
         }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApiDataResponse<Product>>> GetProductById(int id)
+        {
+
+            var product = await _productRepository.FindProductByIdAsync(id);
+            if (product == null)
+            {
+
+                throw new ResourceNotFound404("Product not found");
+            }
+            return Ok(ApiDataResponse<Product>.Success(product, "Product retrieved successfully"));
+        }
+
+
+        [HttpGet("Category/{categoryId}")]
+        public async Task<ActionResult<ApiDataResponse<List<Product>>>> GetProductsByCategoryId(int categoryId)
+        {
+            var products = await _productRepository.FindProductByCategoryIdAsync(categoryId);
+            if (products == null || products.Count == 0)
+            {
+                throw new ResourceNotFound404("No products found in this category");
+
+            }
+            return Ok(ApiDataResponse<List<Product>>.Success(products, "Products retrieved successfully"));
+
+        }
+
+        // GET: api/Product
+        [HttpGet]
+        public async Task<ActionResult<ApiDataResponse<List<Product>>>> GetAllProducts()
+        {
+            var products = await _productRepository.GetAllProductAsync();
+            if (products == null || products.Count == 0)
+            {
+                throw new ResourceNotFound404("No products available");
+            }
+            return Ok(ApiDataResponse<List<Product>>.Success(products, "All products retrieved successfully"));
+        }
+
+
+
+
 
     }
 
