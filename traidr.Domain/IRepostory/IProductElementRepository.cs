@@ -6,5 +6,6 @@ namespace traidr.Domain.IRepostory
     {
         Task AddProductElement(ProductElement productElement);
         Task AddProductElementsAsync(IEnumerable<ProductElement> productElements);
+        List<ProductElement> GetProductElementsByProductId(int productId);
     }
 }
