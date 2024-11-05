@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,5 +31,29 @@ namespace traidr.Domain.Repository
             await _context.SaveChangesAsync();
         }
 
+        public List<ProductElement> GetProductElementsByProductId(int productId)
+        {
+            try
+            {
+                var product = _context.Products
+                    .Include(p => p.ProductElements)
+                    .SingleOrDefault(p => p.ProductId == productId);
+
+                if (product != null)
+                {
+                    return product.ProductElements.ToList();
+                }
+                else
+                {
+                    Console.WriteLine($"Product with ID {productId} not found.");
+                    return new List<ProductElement>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return new List<ProductElement>();
+            }
+        }
     }
 }

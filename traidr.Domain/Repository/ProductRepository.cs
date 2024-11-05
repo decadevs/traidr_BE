@@ -46,5 +46,27 @@ namespace traidr.Domain.Repository
         {
             return await _context.Products.ToListAsync();
         }
+
+        public ProductCategory GetCategoryById(int categoryId)
+        {
+            try
+            {
+                var category = _context.ProductCategories.SingleOrDefault(c => c.CategoryId == categoryId);
+                if (category != null)
+                {
+                    return category;
+                }
+                else
+                {
+                    Console.WriteLine($"Category with ID {categoryId} not found.");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
     }
 }
