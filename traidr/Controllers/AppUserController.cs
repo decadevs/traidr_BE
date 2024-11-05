@@ -39,7 +39,7 @@ namespace traidr.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser([FromQuery] string id)
+        public async Task<IActionResult> GetUser(string id)
         {
             if (id == null) return BadRequest();
             
