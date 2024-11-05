@@ -69,7 +69,8 @@ namespace traidr
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductElementRepository, ProductElementRepository>();
-            
+            builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
+
             // Add the email sender service to the dependency injection container
             builder.Services.AddScoped<IEmailSendingService, EmailSendingService>();
 
