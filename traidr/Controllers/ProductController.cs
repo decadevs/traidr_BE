@@ -162,11 +162,6 @@ namespace traidr.Controllers
             return Ok(elements);
         }
     }
-
-
-
-
-
 }
 
-}
+

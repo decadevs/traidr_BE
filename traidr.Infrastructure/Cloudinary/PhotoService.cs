@@ -3,17 +3,16 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using traidr.Application.IServices;
-using traidr.Infrastructure.Cloudinary;
 
-namespace traidr.Application.Services
+namespace traidr.Infrastructure.Cloudinary
 {
     public class PhotoService : IPhotoService
     {
-        private readonly Cloudinary _cloudinary;
+        private readonly CloudinaryDotNet.Cloudinary _cloudinary;
         public PhotoService(IOptions<CloudinarySettings> config)
         {
             var account = new Account(config.Value.CloudName, config.Value.ApiKey, config.Value.ApiSecret);
-            _cloudinary = new Cloudinary(account);
+            _cloudinary = new CloudinaryDotNet.Cloudinary(account);
         }
 
         public async Task<ImageUploadResult> AddPhotoAsync(IFormFile imageFile)
