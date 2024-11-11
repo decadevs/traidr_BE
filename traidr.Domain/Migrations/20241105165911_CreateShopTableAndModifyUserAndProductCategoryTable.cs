@@ -15,10 +15,6 @@ namespace traidr.Domain.Migrations
                 name: "FK_Products_ProductCategories_ProductCategory",
                 table: "Products");
 
-            migrationBuilder.DropColumn(
-                name: "ShopName",
-                table: "AspNetUsers");
-
             migrationBuilder.RenameColumn(
                 name: "ProductCategory",
                 table: "Products",
@@ -29,29 +25,39 @@ namespace traidr.Domain.Migrations
                 table: "Products",
                 newName: "IX_Products_ProductCategoryId");
 
-            migrationBuilder.AddColumn<string>(
-                name: "FirstName",
+            migrationBuilder.RenameColumn(
+                name: "ShopName",
                 table: "AspNetUsers",
+                newName: "LastName");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Color",
+                table: "ProductElements",
                 type: "text",
                 nullable: false,
                 defaultValue: "");
 
+            migrationBuilder.AddColumn<string[]>(
+                name: "SubCategories",
+                table: "ProductCategories",
+                type: "text[]",
+                nullable: false,
+                defaultValue: new string[0]);
+
             migrationBuilder.AddColumn<string>(
-                name: "LastName",
+                name: "FirstName",
                 table: "AspNetUsers",
                 type: "text",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "ReferralSource",
                 table: "AspNetUsers",
                 type: "integer",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.CreateTable(
-                name: "Shop",
+                name: "Shops",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -62,9 +68,9 @@ namespace traidr.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shop", x => x.Id);
+                    table.PrimaryKey("PK_Shops", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Shop_AspNetUsers_SellerId",
+                        name: "FK_Shops_AspNetUsers_SellerId",
                         column: x => x.SellerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -72,8 +78,8 @@ namespace traidr.Domain.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Shop_SellerId",
-                table: "Shop",
+                name: "IX_Shops_SellerId",
+                table: "Shops",
                 column: "SellerId",
                 unique: true);
 
@@ -94,14 +100,18 @@ namespace traidr.Domain.Migrations
                 table: "Products");
 
             migrationBuilder.DropTable(
-                name: "Shop");
+                name: "Shops");
+
+            migrationBuilder.DropColumn(
+                name: "Color",
+                table: "ProductElements");
+
+            migrationBuilder.DropColumn(
+                name: "SubCategories",
+                table: "ProductCategories");
 
             migrationBuilder.DropColumn(
                 name: "FirstName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "LastName",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
@@ -118,11 +128,10 @@ namespace traidr.Domain.Migrations
                 table: "Products",
                 newName: "IX_Products_ProductCategory");
 
-            migrationBuilder.AddColumn<string>(
-                name: "ShopName",
+            migrationBuilder.RenameColumn(
+                name: "LastName",
                 table: "AspNetUsers",
-                type: "text",
-                nullable: true);
+                newName: "ShopName");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Products_ProductCategories_ProductCategory",

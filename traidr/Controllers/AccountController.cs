@@ -16,11 +16,13 @@ namespace traidr.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
 
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _tokenService = tokenService;
         }
 
@@ -41,7 +43,7 @@ namespace traidr.Controllers
           
             var userExist = await _userManager.FindByEmailAsync(signupDto.Email);
 
-            if (signupDto.Email != null)
+            if (userExist != null)
             {
                 throw new ConflictError409("Email already exists.");
             }
@@ -53,7 +55,6 @@ namespace traidr.Controllers
                 Email = signupDto.Email,                
                 ReferralSource = signupDto.ReferralSource,
             };
-
 
             var userResult = await _userManager.CreateAsync(newUser, signupDto.Password);
 
@@ -74,26 +75,77 @@ namespace traidr.Controllers
             
         }
 
-        [HttpPost]
+        [HttpPost("GoogleAuth")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto googleLoginDto)
         {
             var clientId = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
 
+            
             var payload = await GoogleJsonWebSignature.ValidateAsync(googleLoginDto.Token, new GoogleJsonWebSignature.ValidationSettings
             {
-                Audience = new[] {clientId}
+                Audience = new[] { clientId }
             });
 
+            
             var appUser = await _userManager.FindByEmailAsync(payload.Email);
-
-            if (appUser != null)
+            if (appUser == null)
             {
-                await _userManager.CreateAsync(appUser);
+                appUser = new AppUser
+                {
+                    UserName = payload.Email,
+                    Email = payload.Email,
+                    EmailConfirmed = true 
+                };
+
+                var result = await _userManager.CreateAsync(appUser);
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
+
+                // Optionally, add other claims if needed
+                var roleResult = await _userManager.AddToRoleAsync(appUser, UserRoles.User);
+
+                if (!roleResult.Succeeded)
+                {
+                    throw new DatabaseUpdateError("An error occurred while registering the user.");
+                }
+                await _userManager.AddClaimAsync(appUser, new System.Security.Claims.Claim("GoogleId", payload.Subject));
             }
+
+            await _signInManager.SignInAsync(appUser, isPersistent: false);
 
             var token = _tokenService.CreateToken(appUser);
 
             return Ok(new { appUser, token });
+        }
+    
+
+
+    [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginDto loginDTO)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var user = await _userManager.FindByEmailAsync(loginDTO.Email);
+
+            if (user == null) return Unauthorized("Invalid email address");
+
+            var isValidPassword = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
+
+            if (!isValidPassword)
+            {
+                return Unauthorized("Invalid email or password");
+            }
+
+            return Ok(new 
+            {
+                user.Id,
+                Message = "Login successful",
+                user.Email,
+                Token = _tokenService.CreateToken(user),
+            });
+                     
         }
     }
 }

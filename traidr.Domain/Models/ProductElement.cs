@@ -16,9 +16,11 @@ namespace traidr.Domain.Models
 
         public Product Product { get; set; }
 
-
+        public string Color { get; set; }
         public int QuantityInStock { get; set; }
 
-        public int Sku { get; set; }
+        public int Sku { get; set; } = new Random().Next(100000, 999999);
+
+
     }
 }

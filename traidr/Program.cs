@@ -35,7 +35,7 @@ namespace traidr
                 });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-
+            
             // Swagger Authorization Configuration
             builder.Services.AddSwaggerGen(option =>
             {
@@ -69,6 +69,9 @@ namespace traidr
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductElementRepository, ProductElementRepository>();
+            builder.Services.AddScoped<IShopRepository, ShopRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IAddressRepository, AddressRepository>();
             
             // Add the email sender service to the dependency injection container
             builder.Services.AddScoped<IEmailSendingService, EmailSendingService>();

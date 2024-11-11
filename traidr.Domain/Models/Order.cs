@@ -37,7 +37,7 @@ namespace traidr.Domain.Models
 
 
         
-        public DateTime OrderDate {  get; set; }
+        public DateTime OrderDate {  get; set; } = DateTime.UtcNow;
 
         public decimal TotalAmount { get; set; }
 

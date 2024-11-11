@@ -33,18 +33,42 @@ namespace traidr.Domain.Repository
 
         public async Task<List<Product>> FindProductByCategoryIdAsync(int id)
         {
-            return await _context.Products.Where(s => s.ProductCategoryId == id).ToListAsync();
+            return await _context.Products.Where(p => p.ProductCategoryId == id).Include(p => p.ProductImages).ToListAsync();
         }
 
         public async Task<Product> FindProductByIdAsync(int productId)
         {
 
-            return await _context.Products.FindAsync(productId);
+            return await _context.Products
+                .Include(p => p.Seller)
+                .ThenInclude(s => s.Shop)
+                .Include(p => p.ProductImages)
+                .Include(p => p.ProductCategory)
+                .Include(p => p.Reviews)
+                .ThenInclude(r => r.User)
+                .Where(p => p.ProductId == productId)
+                .Include(p => p.ProductElements)
+                .SingleOrDefaultAsync();
+           
+        }
+        
+        public async Task<List<Review>> GetProductReviewsAsync(int productId)
+        {
+            return await _context.Reviews
+                .Where(r  => r.ProductId == productId)
+                .ToListAsync();           
         }
 
         public async Task<List<Product>> GetAllProductAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Include(p => p.ProductImages)
+                .Include(p => p.ProductCategory).ToListAsync();
+        }
+
+        public async Task AddReviewAsync(Review review)
+        {
+            await _context.Reviews.AddAsync(review);
+            await _context.SaveChangesAsync();
         }
     }
 }

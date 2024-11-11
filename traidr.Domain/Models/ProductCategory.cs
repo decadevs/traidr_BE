@@ -19,7 +19,7 @@ namespace traidr.Domain.Models
         public int? ParentCategoryId { get; set; }
         public ProductCategory ParentCategory { get; set; }   
 
-        public ICollection<ProductCategory> SubCategories { get; set; }
+        //public ICollection<string> SubCategories { get; set; }
 
         public ICollection<Product> Products { get; set; }
     }

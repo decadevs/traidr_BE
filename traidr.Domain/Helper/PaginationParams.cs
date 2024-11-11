@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace traidr.Infrastructure.Pagination
+namespace traidr.Domain.Helper
 {
-    public class PaginationRequest
+    public class PaginationParams
     {
-        private int _pageSize = 10;
+        public int _pageSize = 10;
 
         public const int MaxPageSize = 100;
 
@@ -19,6 +19,5 @@ namespace traidr.Infrastructure.Pagination
             get => _pageSize;
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
-
     }
 }
