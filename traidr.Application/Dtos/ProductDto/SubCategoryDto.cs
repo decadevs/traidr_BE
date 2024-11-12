@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace traidr.Application.Dtos.ProductDto
 {
-    public class ProductElementDto
+    public class SubCategoryDto
     {
-        public int Quantity { get; set; }
-        public int Sku { get; set; } 
-        public string Color { get; set; }
+        public int ParentCategoryId { get; set; }
+        public string Name { get; set; }
 
     }
 }

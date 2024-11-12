@@ -30,7 +30,7 @@ namespace traidr.Domain.Context
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Tracking> Trackings { get; set; }        
         public DbSet<Notification> Notifications { get; set; }
-
+        public DbSet<Shop> Shops { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,10 +50,10 @@ namespace traidr.Domain.Context
                 .HasForeignKey(c => c.BuyerId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<Product>()
+           /* modelBuilder.Entity<Product>()
                 .HasOne(p => p.ProductCategory)
                 .WithMany(c => c.Products)
-                .HasForeignKey(p => p.ProductCategoryId);
+                .HasForeignKey(p => p.ProductCategoryId);*/
 
             base.OnModelCreating(modelBuilder);
         }

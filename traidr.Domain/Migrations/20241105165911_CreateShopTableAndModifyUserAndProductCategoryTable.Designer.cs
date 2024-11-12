@@ -12,7 +12,7 @@ using traidr.Domain.Context;
 namespace traidr.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241026220641_CreateShopTableAndModifyUserAndProductCategoryTable")]
+    [Migration("20241105165911_CreateShopTableAndModifyUserAndProductCategoryTable")]
     partial class CreateShopTableAndModifyUserAndProductCategoryTable
     {
         /// <inheritdoc />
@@ -211,7 +211,6 @@ namespace traidr.Domain.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("Gender")
@@ -221,7 +220,6 @@ namespace traidr.Domain.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
@@ -250,7 +248,7 @@ namespace traidr.Domain.Migrations
                     b.Property<string>("ProfilePhoto")
                         .HasColumnType("text");
 
-                    b.Property<int>("ReferralSource")
+                    b.Property<int?>("ReferralSource")
                         .HasColumnType("integer");
 
                     b.Property<string>("SecurityStamp")
@@ -470,6 +468,10 @@ namespace traidr.Domain.Migrations
                     b.Property<int?>("ParentCategoryId")
                         .HasColumnType("integer");
 
+                    b.Property<string[]>("SubCategories")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
                     b.HasKey("CategoryId");
 
                     b.HasIndex("ParentCategoryId");
@@ -484,6 +486,10 @@ namespace traidr.Domain.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
@@ -586,7 +592,7 @@ namespace traidr.Domain.Migrations
                     b.HasIndex("SellerId")
                         .IsUnique();
 
-                    b.ToTable("Shop");
+                    b.ToTable("Shops");
                 });
 
             modelBuilder.Entity("traidr.Domain.Models.Ticket", b =>
@@ -834,7 +840,7 @@ namespace traidr.Domain.Migrations
             modelBuilder.Entity("traidr.Domain.Models.ProductCategory", b =>
                 {
                     b.HasOne("traidr.Domain.Models.ProductCategory", "ParentCategory")
-                        .WithMany("SubCategories")
+                        .WithMany()
                         .HasForeignKey("ParentCategoryId");
 
                     b.Navigation("ParentCategory");
@@ -961,8 +967,6 @@ namespace traidr.Domain.Migrations
             modelBuilder.Entity("traidr.Domain.Models.ProductCategory", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("SubCategories");
                 });
 #pragma warning restore 612, 618
         }

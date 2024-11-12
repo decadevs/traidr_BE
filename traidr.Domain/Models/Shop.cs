@@ -15,6 +15,6 @@ namespace traidr.Domain.Models
 
         [ForeignKey("Seller")]
         public string SellerId { get; set; }
-        public AppUser Seller { get; set; }
+        public AppUser Seller { get; set; }       
     }
 }
