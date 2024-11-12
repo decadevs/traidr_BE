@@ -96,7 +96,7 @@ namespace traidr.Controllers
             {
                 appUser = new AppUser
                 {
-                    UserName = payload.FamilyName,
+                    UserName = payload.GivenName,
                     Email = payload.Email,
                     EmailConfirmed = true 
                 };
