@@ -12,5 +12,6 @@ namespace traidr.Domain.IRepostory
         Task<List<Product>> GetAllProductAsync();
         Task AddReviewAsync(Review review);
 
+        ProductCategory GetCategoryById(int categoryId);
     }
 }

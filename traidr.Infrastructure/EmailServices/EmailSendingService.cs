@@ -22,6 +22,7 @@ namespace traidr.Infrastructure.EmailServices
 
         public async Task SendEmailAsync(string toEmail, string subject, string body)
         {
+            
             var mail = new MailMessage
             {
                 From = new MailAddress(_smtpSettings.FromEmail, _smtpSettings.FromName),
@@ -39,6 +40,7 @@ namespace traidr.Infrastructure.EmailServices
 
                 await smtpClient.SendMailAsync(mail);
             }
+
         }
     }
 }

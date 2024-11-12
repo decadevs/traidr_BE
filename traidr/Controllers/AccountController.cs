@@ -1,4 +1,5 @@
 ﻿using Google.Apis.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +19,14 @@ namespace traidr.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
+        private readonly IEmailSendingService _emailService;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IEmailSendingService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _emailService = emailService;
         }
 
    
@@ -78,13 +81,14 @@ namespace traidr.Controllers
         [HttpPost("GoogleAuth")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto googleLoginDto)
         {
-            var clientId = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
+            var clientId = "754362326099-1jchbuf84tuq745ddk4k2cijhe91n3e9.apps.googleusercontent.com";
 
             
-            var payload = await GoogleJsonWebSignature.ValidateAsync(googleLoginDto.Token, new GoogleJsonWebSignature.ValidationSettings
-            {
-                Audience = new[] { clientId }
-            });
+            var payload = await GoogleJsonWebSignature.ValidateAsync(googleLoginDto.Token, 
+                new GoogleJsonWebSignature.ValidationSettings
+                {
+                    Audience = new[] { clientId }
+                });
 
             
             var appUser = await _userManager.FindByEmailAsync(payload.Email);
@@ -92,7 +96,7 @@ namespace traidr.Controllers
             {
                 appUser = new AppUser
                 {
-                    UserName = payload.Email,
+                    UserName = payload.FamilyName,
                     Email = payload.Email,
                     EmailConfirmed = true 
                 };
@@ -146,6 +150,72 @@ namespace traidr.Controllers
                 Token = _tokenService.CreateToken(user),
             });
                      
+        }
+
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] UpdatePasswordDto model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized(new { message = "User not found." });
+            }
+
+            // Attempt to change the password
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { message = "Failed to change password", errors = result.Errors });
+            }
+
+            return Ok(new { message = "Password changed successfully" });
+        }
+
+
+        [HttpPost("request-password-reset")]
+        public async Task<IActionResult> RequestPasswordReset([FromBody] ResetPasswordRequestDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                // Return a success response to prevent email enumeration attacks
+                return BadRequest(new { message = "Invalid user email" });
+            }
+
+            // Generate the password reset token
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            if (token == null) return BadRequest(new { message = "Failed to generate reset Link" });
+            // Generate reset link
+            var resetLink = $"http://localhost:5173/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+
+            // Send email
+            await _emailService.SendEmailAsync(user.Email, "Password Reset", $"Please reset your password by clicking here: {resetLink}");
+
+            return Ok(new { message = "If your email is registered, you will receive a reset link." });
+        }
+
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return BadRequest(new { message = "Invalid user email." });
+            }
+
+            // Attempt to reset the password using the token
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { message = "Failed to reset password", errors = result.Errors });
+            }
+
+            return Ok(new { message = "Password has been reset successfully" });
         }
     }
 }

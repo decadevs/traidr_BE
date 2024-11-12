@@ -90,9 +90,9 @@ namespace traidr.Domain.Context.PreSeeding
 
         public static async Task SeedAllDataAsync(ApplicationDbContext context)
         {
-            string user1Id = "31c29d76-181a-4520-a74d-0de97bfcde33";
-            string user2Id = "8a1d5819-d626-4134-8bed-3549aafb2491";
-            string user3Id = "df31d370-0ce9-47de-ba63-c56670e991dd";
+            string user1Id = "aa5d9d41-ad60-4cd9-b3ac-df2c57496f8f";
+            string user2Id = "8d183e75-9c8e-4386-9e8b-dcc6e18f74f7";
+            string user3Id = "b5b61806-bd33-4bbe-a4d2-a1465903f6ac";
 
 
             // Addresses

@@ -217,6 +217,32 @@ namespace traidr.Controllers
             return Ok(reviews);
         }
 
+        [HttpGet("Productcategory/{id}")]
+        public ActionResult<ProductCategory> GetCategoryById(int id)
+        {
+            var category = _productRepository.FindProductByCategoryIdAsync(id);
+            if (category == null)
+            {
+                return NotFound(new { message = $"Category with ID {id} not found." });
+            }
+
+            return Ok(category);
+        }
+
+        // Endpoint to get product elements by Product ID
+        [HttpGet("product/{id}/elements")]
+        public ActionResult<List<ProductElement>> GetProductElementsByProductId(int id)
+        {
+            var elements = _productElementRepository.GetProductElementsByProductId(id);
+            if (elements == null || elements.Count == 0)
+            {
+                return NotFound(new { message = $"Product elements for product ID {id} not found." });
+            }
+
+            return Ok(elements);
+        }
+
+
         [Authorize]
         [HttpPost("{productId}/add-reviews")]
         public async Task<IActionResult> AddReview(int productId, [FromBody] ReviewDto reviewDto)
@@ -235,8 +261,6 @@ namespace traidr.Controllers
 
             return Ok("Review Added successfully");
         }
-
-
     }
-
 }
+
